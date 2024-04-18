@@ -8,6 +8,7 @@
 #include "Components/STUCharacterMovementComponent.h"
 #include "Components/STUHealthComponent.h"
 #include "Components/TextRenderComponent.h"
+#include "Engine/DamageEvents.h"
 
 ASTUBaseCharacter::ASTUBaseCharacter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer.SetDefaultSubobjectClass<USTUCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
 {
@@ -37,10 +38,12 @@ void ASTUBaseCharacter::BeginPlay()
 void ASTUBaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+    
     const auto Health = HealthComponent->GetHealth();
     HealthTextComponent -> SetText(FText::FromString(FString::Printf(TEXT("%.0f"),Health)));
-    
 
+    TakeDamage(0.1f,FDamageEvent{},Controller,this);
 }
 
 void ASTUBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -54,9 +57,6 @@ void ASTUBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
     PlayerInputComponent->BindAction("Jump",IE_Pressed,this,&ASTUBaseCharacter::Jump);
     PlayerInputComponent->BindAction("Run",IE_Pressed,this,&ASTUBaseCharacter::OnStartRunning);
     PlayerInputComponent->BindAction("Run",IE_Released,this,&ASTUBaseCharacter::OnStopRunning);
-    
-    
-
 }
 
 bool ASTUBaseCharacter::bIsRunning() const
