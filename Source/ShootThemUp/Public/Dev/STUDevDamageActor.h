@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "STUDevDamageActor.generated.h"
 
+
+
 UCLASS()
 class SHOOTTHEMUP_API ASTUDevDamageActor : public AActor
 {
@@ -29,6 +31,9 @@ public:
 
     UPROPERTY(EditAnywhere,BlueprintReadWrite)
     FColor SpereColor = FColor::Red;
+
+    UPROPERTY(EditAnywhere,BlueprintReadWrite)
+    TSubclassOf<UDamageType> DamageType;
     
 
 protected:
