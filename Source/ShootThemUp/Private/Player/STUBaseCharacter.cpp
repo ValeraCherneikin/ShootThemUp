@@ -10,6 +10,7 @@
 #include "Components/TextRenderComponent.h"
 #include "Engine/DamageEvents.h"
 
+DEFINE_LOG_CATEGORY_STATIC(LogBaseCharacter,All,All)
 ASTUBaseCharacter::ASTUBaseCharacter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer.SetDefaultSubobjectClass<USTUCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
 {
     PrimaryActorTick.bCanEverTick = true;
@@ -33,15 +34,16 @@ void ASTUBaseCharacter::BeginPlay()
 
     check(HealthComponent);
     check(HealthTextComponent);
+    check(GetCharacterMovement());
+    
+    OnHealthChanged(HealthComponent->GetHealth());
+    HealthComponent -> OnDeath.AddUObject(this, &ASTUBaseCharacter::OnDeath);
+    HealthComponent -> FOnHealthChange.AddUObject(this,&ASTUBaseCharacter::OnHealthChanged);
 }
 
 void ASTUBaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-    
-    const auto Health = HealthComponent->GetHealth();
-    HealthTextComponent -> SetText(FText::FromString(FString::Printf(TEXT("%.0f"),Health)));
 }
 
 void ASTUBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -94,6 +96,22 @@ void ASTUBaseCharacter::OnStartRunning()
 void ASTUBaseCharacter::OnStopRunning()
 {
     bWantsToRun = false;
+}
+
+void ASTUBaseCharacter::OnDeath()
+{
+    UE_LOG(LogBaseCharacter,Display, TEXT("player %s is dead"),*GetName());
+
+    PlayAnimMontage(DeathAnimMontage);
+
+    GetCharacterMovement() -> DisableMovement();
+
+    SetLifeSpan(5.0f);
+}
+
+void ASTUBaseCharacter::OnHealthChanged(float Health)
+{
+    HealthTextComponent -> SetText(FText::FromString(FString::Printf(TEXT("%.0f"),Health)));
 }
 
 
