@@ -8,6 +8,7 @@
 #include "GameFramework/Controller.h"
 
 
+
 DEFINE_LOG_CATEGORY_STATIC(LogBaseWeapon,All,All)
 
 ASTUBaseWeapon::ASTUBaseWeapon()
