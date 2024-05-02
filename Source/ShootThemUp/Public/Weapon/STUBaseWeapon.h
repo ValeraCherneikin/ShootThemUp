@@ -7,10 +7,27 @@
 #include "STUBaseWeapon.generated.h"
 
 class USkeletalMeshComponent;
+
+USTRUCT(BlueprintType)
+struct FAmmoData
+{
+    GENERATED_USTRUCT_BODY()
+    
+     UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category = "Weapon")
+     int32 Bullets;
+    
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category = "Weapon", meta = (EditCondition = "!Infinite"))
+    int32 Clips;
+    
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category = "Weapon")
+    bool Infinite;
+    
+};
 UCLASS()
 class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
 {
 	GENERATED_BODY()
+    
 	
 public:	
 	ASTUBaseWeapon();
@@ -22,20 +39,35 @@ protected:
     UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "Components")
 	USkeletalMeshComponent* WeaponMesh;
 
-    UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
+    UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category="Weapon")
     FName MuzzleSocketName = "MuzzleSocket";
 
-    UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
+    UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category="Weapon")
     float TraceMaxDistance = 1500;
-    
-    virtual void BeginPlay() override;
 
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category="Weapon")
+    FAmmoData DefaultAmao =  {15,10,false};
+
+    virtual void BeginPlay() override;
+    
     virtual void MakeShot();
     virtual bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
     APlayerController* GetPlayerController() const;
     bool GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const;
     FVector GetMuzzleWorldLocation() const;
+
     void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd);
+
+    void DecreaseAmmo();
+    bool IsAmmoEmpty() const;
+    bool IsClipEmpty() const;
+    void ChangeClip();
+    void LogAmmo();
+    
+
+private:
+    FAmmoData CurrentAmmo;
+    
 
 
 };
