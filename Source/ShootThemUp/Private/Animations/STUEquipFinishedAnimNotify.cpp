@@ -3,9 +3,3 @@
 
 #include "Animations/STUEquipFinishedAnimNotify.h"
 
-
-void USTUEquipFinishedAnimNotify::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
-{
-    OnNotifiend.Broadcast(MeshComp);
-    Super::Notify(MeshComp, Animation);
-}
