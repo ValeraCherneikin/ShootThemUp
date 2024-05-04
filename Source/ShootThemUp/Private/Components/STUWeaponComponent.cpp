@@ -35,9 +35,7 @@ void USTUWeaponComponent::NextWeapon()
 
 void USTUWeaponComponent::Reload()
 {
-    if(!CanReload()) return;
-    ReloadAnimInprogress = true;
-    PlayAnimonatage(CurrentReloadAnimMontage);
+    ChangeClip();
 }
 
 
@@ -78,11 +76,13 @@ void USTUWeaponComponent::SpawnWeapons()
     ACharacter* Character = Cast<ACharacter>(GetOwner());
     if(!Character || !GetWorld()) return;
 
+    
     for(auto OneWeaponData : WeaponData)
     {
         auto Weapon = GetWorld()->SpawnActor<ASTUBaseWeapon>(OneWeaponData.WeaponClass);
         if(!Weapon) continue;
 
+        Weapon -> OnClipEmpty.AddUObject(this,&USTUWeaponComponent::OnEmptyClip);
         Weapon -> SetOwner(Character);
         Weapons.Add(Weapon);
 
@@ -146,9 +146,8 @@ void USTUWeaponComponent::InitAnimations()
     {
         auto ReloadFinishedNotify = FindNotifyByClass<USTUReloadFinishedAnimNotify>(OneWeaponData.ReloadAnimMontage);
         if(!ReloadFinishedNotify) continue; 
-        {
-            ReloadFinishedNotify->OnNotifiend.AddUObject(this, &USTUWeaponComponent::OnEquipFinished);
-        } 
+        
+            ReloadFinishedNotify->OnNotifiend.AddUObject(this, &USTUWeaponComponent::OnReloadFinished);
     }
 }
 
@@ -175,7 +174,24 @@ bool USTUWeaponComponent::CanFire() const
 
 bool USTUWeaponComponent::CanReload() const
 {
-    return CurrentWeapon && !EquipAnimInprogress && !ReloadAnimInprogress;
+    return CurrentWeapon              //
+    &&!EquipAnimInprogress           //
+    &&!ReloadAnimInprogress         //
+    && CurrentWeapon->CanReload(); //
+}
+
+void USTUWeaponComponent::OnEmptyClip()
+{
+    ChangeClip();
+}
+
+void USTUWeaponComponent::ChangeClip()
+{
+    if(!CanReload()) return;
+    CurrentWeapon->StopFire();
+    CurrentWeapon->ChangeClip();
+    ReloadAnimInprogress = true;
+    PlayAnimonatage(CurrentReloadAnimMontage);
 }
 
 bool USTUWeaponComponent::CanEquip() const

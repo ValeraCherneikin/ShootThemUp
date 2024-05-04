@@ -31,7 +31,7 @@ public:
     void StartFire();
     void StopFire();
     void NextWeapon();
-    void Reload();
+    auto Reload() -> void;
     
 
 protected:
@@ -81,6 +81,8 @@ private:
     bool CanEquip() const;
     bool CanReload() const;
 
+    void OnEmptyClip();
+    void ChangeClip();
     template<typename T>
     T* FindNotifyByClass(UAnimSequenceBase* Animation)
     {
