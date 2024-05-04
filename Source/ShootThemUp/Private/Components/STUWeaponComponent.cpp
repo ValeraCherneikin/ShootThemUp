@@ -6,8 +6,11 @@
 #include "GameFramework/Character.h"
 #include "Animations/STUEquipFinishedAnimNotify.h"
 #include "Animations/STUReloadFinishedAnimNotify.h"
+#include "Animations/AnimUtils.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogWeaponComponent,All,All);
+
+constexpr static int32 WeaponNum = 2;
 
 USTUWeaponComponent::USTUWeaponComponent()
 {
@@ -41,6 +44,8 @@ void USTUWeaponComponent::Reload()
 
 void USTUWeaponComponent::BeginPlay()
 {
+   checkf(WeaponData.Num() == WeaponNum, TEXT("Our character can hold only %i weapon items"),WeaponNum);
+    
     Super::BeginPlay();
     
     CurrentWeaponIndex = 0;
@@ -89,7 +94,6 @@ void USTUWeaponComponent::SpawnWeapons()
         AttachWeaponToSocket(Weapon,Character->GetMesh(), WeaponArmorySocketName);
     }
     
-    //CurrentWeapon->SetOwner(Character);
 } 
 void USTUWeaponComponent:: AttachWeaponToSocket(ASTUBaseWeapon* Weapon,USceneComponent* SceneComponent, const FName& SocketName)
 {
@@ -136,16 +140,24 @@ void USTUWeaponComponent::PlayAnimonatage(UAnimMontage* Animation)
 
 void USTUWeaponComponent::InitAnimations()
 {
-    auto EquipFinishedNotify = FindNotifyByClass<USTUEquipFinishedAnimNotify>(EquipAnimMontage);
+    auto EquipFinishedNotify = AnimUtils::FindNotifyByClass<USTUEquipFinishedAnimNotify>(EquipAnimMontage);
     if(EquipFinishedNotify)
     {
         EquipFinishedNotify->OnNotifiend.AddUObject(this, &USTUWeaponComponent::OnEquipFinished);
+    } else
+    {
+        UE_LOG(LogWeaponComponent,Error,TEXT("Equip anim notify if forgotten to set"));
+        checkNoEntry();
     }
 
     for(auto OneWeaponData: WeaponData)
     {
-        auto ReloadFinishedNotify = FindNotifyByClass<USTUReloadFinishedAnimNotify>(OneWeaponData.ReloadAnimMontage);
-        if(!ReloadFinishedNotify) continue; 
+        auto ReloadFinishedNotify =  AnimUtils::FindNotifyByClass<USTUReloadFinishedAnimNotify>(OneWeaponData.ReloadAnimMontage);
+        if(!ReloadFinishedNotify)
+        {
+            UE_LOG(LogWeaponComponent,Error,TEXT("Reload anim notify if forgotten to set"));
+            checkNoEntry();
+        } 
         
             ReloadFinishedNotify->OnNotifiend.AddUObject(this, &USTUWeaponComponent::OnReloadFinished);
     }
