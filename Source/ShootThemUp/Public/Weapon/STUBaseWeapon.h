@@ -20,6 +20,7 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
 public:	
 	ASTUBaseWeapon();
     FWeaponUIData GetUIData() const {return UIData; }
+    FAmmoData GetAmmoData() const {return CurrentAmmo;}
 
     FOnClipEmptySignature OnClipEmpty;
 
