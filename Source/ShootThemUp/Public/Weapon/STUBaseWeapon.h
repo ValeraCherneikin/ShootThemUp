@@ -19,6 +19,7 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
 	
 public:	
 	ASTUBaseWeapon();
+    FWeaponUIData GetUIData() const {return UIData; }
 
     FOnClipEmptySignature OnClipEmpty;
 
@@ -40,6 +41,9 @@ protected:
 
     UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category="Weapon")
     FAmmoData DefaultAmao =  {15,10,false};
+
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category="UI")
+    FWeaponUIData UIData;
 
     virtual void BeginPlay() override;
     

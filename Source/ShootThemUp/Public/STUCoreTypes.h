@@ -4,6 +4,7 @@
 
 //weapon
 class ASTUBaseWeapon;
+class UTexture2D;
 DECLARE_MULTICAST_DELEGATE(FOnClipEmptySignature);
 
 USTRUCT(BlueprintType)
@@ -34,6 +35,19 @@ struct FWeaponData
     UAnimMontage* ReloadAnimMontage;
 };
 
+USTRUCT(BlueprintType)
+struct FWeaponUIData
+{
+  GENERATED_USTRUCT_BODY()
+
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category = "UI")
+    UTexture2D* MainIcon;
+
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category = "UI")
+    UTexture2D* CrossHairIcon;
+    
+    
+};
 //health
 DECLARE_MULTICAST_DELEGATE(FOnDeath)
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChange,float)
