@@ -5,7 +5,7 @@
 //weapon
 class ASTUBaseWeapon;
 class UTexture2D;
-DECLARE_MULTICAST_DELEGATE(FOnClipEmptySignature);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnClipEmptySignature,ASTUBaseWeapon*);
 
 USTRUCT(BlueprintType)
 struct FAmmoData
