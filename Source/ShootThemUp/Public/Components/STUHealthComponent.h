@@ -26,8 +26,9 @@ public:
 
     FOnDeath OnDeath;
     FOnHealthChange FOnHealthChange;
-    
 
+    bool TryToAddHealth(float HealthAmount);
+    bool IsHealthFull() const;
     
 
 protected:
