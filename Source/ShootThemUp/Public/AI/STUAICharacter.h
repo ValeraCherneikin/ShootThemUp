@@ -6,11 +6,20 @@
 #include "Player/STUBaseCharacter.h"
 #include "STUAICharacter.generated.h"
 
+class UBehaviorTree;
+class USTUCharacterMovementComponent;
+
 UCLASS()
 class SHOOTTHEMUP_API ASTUAICharacter : public ASTUBaseCharacter
 {
 	GENERATED_BODY()
 public:
     ASTUAICharacter(const FObjectInitializer& ObjInit);
+
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="AI")
+    UBehaviorTree* BehaviorTreeAssets;
+
+    UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="AI")
+    USTUCharacterMovementComponent* CharacterMovementComponent;
 	
 };
