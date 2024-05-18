@@ -21,5 +21,7 @@ public:
 
     UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="AI")
     USTUCharacterMovementComponent* CharacterMovementComponent;
+
+    
 	
 };
