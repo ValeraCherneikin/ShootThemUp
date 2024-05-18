@@ -19,11 +19,13 @@ class SHOOTTHEMUP_API ASTUBaseCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
-    ASTUBaseCharacter(const FObjectInitializer& ObjectInitializer);
+    ASTUBaseCharacter(const FObjectInitializer& ObjInit);
 
 protected:
     UPROPERTY(VisibleAnywhere,BlueprintReadWrite,Category="Components")
     USpringArmComponent* SpringArmComponent;
+
+    
     
     UPROPERTY(VisibleAnywhere,BlueprintReadWrite,Category="Components")
     UCameraComponent* CameraComponent;
