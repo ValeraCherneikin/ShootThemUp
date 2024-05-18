@@ -14,9 +14,10 @@ public class ShootThemUp : ModuleRules
 
 		PublicIncludePaths.AddRange(new string[] { "ShootThemUp/Public/Player",
 			"ShootThemUp/Public/Components",
-			"ShootThem/Public/Animations",
-			"ShootThem/Public/Pickups",
-			"ShootThem/Public/Weapon/Components"
+			"ShootThemUp/Public/Animations",
+			"ShootThemUp/Public/Pickups",
+			"ShootThemUp/Public/Weapon/Components",
+			"ShootThemUp/Public/AI"
 		});
 
 		// Uncomment if you are using Slate UI
