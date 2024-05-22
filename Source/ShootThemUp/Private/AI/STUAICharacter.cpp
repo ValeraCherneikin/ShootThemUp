@@ -4,8 +4,8 @@
 #include "AI/STUAICharacter.h"
 #include "AI/STUAIController.h"
 #include "Components/STUCharacterMovementComponent.h"
-
-ASTUAICharacter::ASTUAICharacter(const FObjectInitializer& ObjInit): Super(ObjInit)
+#include "Components/STUAIWeaponComponent.h"
+ASTUAICharacter::ASTUAICharacter(const FObjectInitializer& ObjInit): Super(ObjInit.SetDefaultSubobjectClass<USTUAIWeaponComponent>("WeaponComponent"))
 {
     AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
     AIControllerClass = ASTUAIController::StaticClass();
