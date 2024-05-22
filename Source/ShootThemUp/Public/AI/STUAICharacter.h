@@ -22,6 +22,9 @@ public:
     UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="AI")
     USTUCharacterMovementComponent* CharacterMovementComponent;
 
+protected:
+    virtual void OnDeath() override;
+
     
 	
 };
