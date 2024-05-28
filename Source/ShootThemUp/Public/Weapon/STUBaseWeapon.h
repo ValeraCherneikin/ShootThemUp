@@ -34,6 +34,7 @@ public:
 
     void ChangeClip();
     bool CanReload() const;
+    bool IsAmmoFull() const;
 
 protected:
     UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "Components")
@@ -66,7 +67,6 @@ protected:
 
     void DecreaseAmmo();
     bool IsClipEmpty() const;
-    bool IsAmmoFull() const;
     
     void LogAmmo();
 
