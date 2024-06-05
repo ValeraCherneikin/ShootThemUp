@@ -18,15 +18,16 @@ class SHOOTTHEMUP_API USTUWeaponComponent : public UActorComponent
 public:	
 	USTUWeaponComponent();
 
-    void StartFire();
+    virtual void StartFire();
     void StopFire();
-    void NextWeapon();
+    virtual void NextWeapon();
     void Reload();
 
     bool GetCurrentWeaponUIData(FWeaponUIData& UIData) const;
     bool GetCurrentWeaponAmmoData(FAmmoData& AmmoData) const;
 
     bool TryToAddAmmo(TSubclassOf<ASTUBaseWeapon> WeaponType, int32 ClipsAmount);
+    bool NeedAmmo(TSubclassOf<ASTUBaseWeapon> WeaponType);
 
 protected:
     UPROPERTY(EditDefaultsOnly,Category = "Weapon")
@@ -35,11 +36,23 @@ protected:
     virtual void BeginPlay() override;
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
+    bool CanFire() const;
+    bool CanEquip() const;
+    void EquipWeapon( int32 WeaponIndex);
+
     UPROPERTY(EditDefaultsOnly,Category = "Weapon")
     FName  WeaponEquipSocketName = "WeaponSocket";
 
     UPROPERTY(EditDefaultsOnly,Category = "Weapon")
     FName  WeaponArmorySocketName = "ArmorySocket";
+
+    UPROPERTY()
+    ASTUBaseWeapon* CurrentWeapon = nullptr;
+    
+    UPROPERTY()
+    TArray<ASTUBaseWeapon*> Weapons;
+
+    int32 CurrentWeaponIndex = 0;
 
     UPROPERTY(EditDefaultsOnly,Category = "Animation")
     UAnimMontage* EquipAnimMontage;
@@ -48,31 +61,22 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
-    UPROPERTY()
-    ASTUBaseWeapon* CurrentWeapon = nullptr;
     
     UPROPERTY()
-    TArray<ASTUBaseWeapon*> Weapons;
-
-    UPROPERTY()
     UAnimMontage* CurrentReloadAnimMontage = nullptr;
-
-    int32 CurrentWeaponIndex = 0;
+    
     bool EquipAnimInprogress = false;
     bool ReloadAnimInprogress = false;
     
     void SpawnWeapons();
     void AttachWeaponToSocket(ASTUBaseWeapon* Weapon,USceneComponent* SceneComponent, const FName& SocketName);
-    void EquipWeapon( int32 WeaponIndex);
     
     void PlayAnimonatage(UAnimMontage* Animation);
     void InitAnimations();
 
     void OnEquipFinished(USkeletalMeshComponent* MeshComponent);
     void OnReloadFinished(USkeletalMeshComponent* MeshComponent);
-
-    bool CanFire() const;
-    bool CanEquip() const;
+    
     bool CanReload() const;
 
     void OnEmptyClip(ASTUBaseWeapon* AmmoEmptyWeapon);
@@ -93,4 +97,5 @@ private:
         }
         return nullptr;
     };
+    
 };
