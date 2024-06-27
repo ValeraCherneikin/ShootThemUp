@@ -7,6 +7,7 @@
 #include "Weapon/Components/STUWeaponFXComponent.h"
 #include "NiagaraComponent.h"
 #include "NiagaraFunctionLibrary.h"
+#include "Engine/DamageEvents.h"
 
 ASTURifleWeapon::ASTURifleWeapon()
 {

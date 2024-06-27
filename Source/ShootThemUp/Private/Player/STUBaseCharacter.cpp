@@ -92,6 +92,14 @@ float ASTUBaseCharacter::GetMovementDirection() const
     
 }
 
+void ASTUBaseCharacter::SetPlayerColor(const FLinearColor& Color)
+{
+     const auto MaterialInst = GetMesh()->CreateAndSetMaterialInstanceDynamic(0);
+    if(!MaterialInst) return;
+
+    MaterialInst->SetVectorParameterValue(MaterialColorName,Color);
+}
+
 void ASTUBaseCharacter::MoveForward(float Amount)
 {
     bIsMovingForward = Amount > 0.0f;
