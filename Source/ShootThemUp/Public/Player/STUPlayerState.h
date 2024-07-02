@@ -18,10 +18,21 @@ public:
 
     void SetTeamColor(const FLinearColor& Color){TeamColor = Color;}
     FLinearColor GetTeamColor() const {return TeamColor;}
-    
+
+    void addKill(){++killsNum;}
+    int32 GetKillsNum() const {return killsNum;}
+
+    void addDeath(){++DeathsNum;}
+    int32 GetDeathNum() const {return DeathsNum;}
+
+    void LogInfo();
 private:
     int32 TeamID;
     FLinearColor TeamColor;
+
+    int32 killsNum = 0;
+    int32 DeathsNum = 0;
+    
     
 	
 };
