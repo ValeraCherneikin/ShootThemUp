@@ -8,7 +8,7 @@
 #include "UI/STUGameHUD.h"
 #include "Player/STUPlayerState.h"
 
-DEFINE_LOG_CATEGORY_STATIC(LogSTUGameModeBase,All,All);
+//DEFINE_LOG_CATEGORY(LogSTUGameModeBase,All,All);
 
 ASTUGameModeBase::ASTUGameModeBase()
 {
@@ -77,7 +77,7 @@ void ASTUGameModeBase::StartRound()
 
 void ASTUGameModeBase::GameTimerUpdate()
 {
-    UE_LOG(LogSTUGameModeBase,Display,TEXT("item: %i / Round: i%/%i"), RoundCountDown, CurrentRound,GameData.RoundsNum);
+    //UE_LOG(LogSTUGameModeBase,Display,TEXT("item: %i / Round: i%/%i"), RoundCountDown, CurrentRound,GameData.RoundsNum);
 
     if(--RoundCountDown == 0)
     {
@@ -91,7 +91,7 @@ void ASTUGameModeBase::GameTimerUpdate()
         }
         else
         {
-            UE_LOG(LogSTUGameModeBase,Display,TEXT("------ GAME OVER ------"));
+            //UE_LOG(LogSTUGameModeBase,Display,TEXT("------ GAME OVER ------"));
             LogPlayerInfo();
         }
     }
@@ -144,7 +144,7 @@ FLinearColor ASTUGameModeBase::DetermineColorByTeamID(int32 TeamID) const
         return GameData.TeamColors[TeamID - 1 ];
     }
 
-    UE_LOG(LogSTUGameModeBase, Warning, TEXT("No color for team id: %i, set to default: %s"), TeamID,*GameData.DefaultTeamColor.ToString());
+    //UE_LOG(LogSTUGameModeBase, Warning, TEXT("No color for team id: %i, set to default: %s"), TeamID,*GameData.DefaultTeamColor.ToString());
     return GameData.DefaultTeamColor;
 }
 
