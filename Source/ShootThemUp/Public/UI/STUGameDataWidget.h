@@ -9,9 +9,7 @@
 class ASTUPlayerState;
 class ASTUGameModeBase;
 
-/**
- * 
- */
+
 UCLASS()
 class SHOOTTHEMUP_API USTUGameDataWidget : public UUserWidget
 {
