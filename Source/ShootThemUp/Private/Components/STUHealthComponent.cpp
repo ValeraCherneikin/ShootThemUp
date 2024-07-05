@@ -1,12 +1,15 @@
 // Shoot Them Up Game.All Rights Reserved.
 
 #include "Components/STUHealthComponent.h"
+
+#include "STUGameModeBase.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/Pawn.h"
 #include "GameFramework/Controller.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
 #include "Camera/CameraShakeBase.h"
+#include "STUGameModeBase.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogHealthComponent,All,All);
 
@@ -51,6 +54,7 @@ void USTUHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, co
    
     if(IsDead())
     {
+        killed(InstigatedBy);
         OnDeath.Broadcast();
     }
     else if(AutoHeal)
@@ -88,5 +92,17 @@ void USTUHealthComponent::PlayCameraShake()
     if(!Controller || !Controller->PlayerCameraManager) return;
 
     Controller->PlayerCameraManager->StartCameraShake(CameraShake);
+}
+
+void USTUHealthComponent::killed(AController* KillerController)
+{
+    if(!GetWorld())return;
+    const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode());
+    if(!GameMode) return;
+
+    const auto Player = Cast<APawn> (GetOwner());
+    const auto VictimController = Player ? Player->Controller : nullptr;
+
+    GameMode->killed(KillerController,VictimController);
 }
 
