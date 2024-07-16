@@ -31,7 +31,8 @@ public:
     UFUNCTION(BlueprintCallable,Category="UI")
     bool isPlayerSpectating() const;
 
-    virtual bool Initialize() override;
+protected:
+    virtual void NativeOnInitialized() override;
 
 private:
     void OnHealthChanged(float Health,float HealthDelta);

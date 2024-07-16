@@ -2,9 +2,7 @@
 
 
 #include "UI/STUPlayerHUDWidget.h"
-
 #include "STUWeaponComponent.h"
-#include "Components/STUHealthComponent.h"
 #include "Components/STUHealthComponent.h"
 #include "STUUtils.h"
 
@@ -48,8 +46,9 @@ bool USTUPlayerHUDWidget::isPlayerSpectating() const
     return Contoller && Contoller->GetStateName() == NAME_Spectating;
 }
 
-bool USTUPlayerHUDWidget::Initialize()
+void USTUPlayerHUDWidget::NativeOnInitialized()
 {
+    Super::NativeOnInitialized();
     if(GetOwningPlayer())
     {
         GetOwningPlayer()->GetOnNewPawnNotifier().AddUObject(this,&USTUPlayerHUDWidget::OnNewPawn);
@@ -58,7 +57,6 @@ bool USTUPlayerHUDWidget::Initialize()
         OnNewPawn(GetOwningPlayerPawn());
         OnNewPawn(GetOwningPlayerPawn());
     }
-    return Super::Initialize();
 }
 
 void USTUPlayerHUDWidget::OnHealthChanged(float Health, float HealthDelta)
