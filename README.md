@@ -8,7 +8,7 @@ Shoot Them Up - это шутер от третьего лица, где ест�
 
 ## Статус - в разработке
 
-## Связь со мной - 
+## Связь со мной - https://tapy.me/dirty_monkey
 
 # Shoot Them Up - EN
 
@@ -20,7 +20,7 @@ Shoot Them Up is a third-person shooter featuring teams, rounds, and stat tracki
 
 ## Status - In Development
 
-## Contact Me - 
+## Contact Me - https://tapy.me/dirty_monkey
 
 
 
