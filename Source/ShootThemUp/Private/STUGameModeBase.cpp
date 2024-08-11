@@ -10,6 +10,7 @@
 #include "STUUtils.h"
 #include "Components/STURespawnComponent.h"
 #include "EngineUtils.h"
+#include "STUGameInstance.h"
 
 // DEFINE_LOG_CATEGORY_STATIC(LogSTUGameModeBase,All,All);
 
@@ -20,6 +21,7 @@ ASTUGameModeBase::ASTUGameModeBase()
     PlayerControllerClass = ASTUPlayerController::StaticClass();
     HUDClass              = ASTUGameHUD::StaticClass();
     PlayerStateClass = ASTUPlayerState::StaticClass();
+    
 }
 
 void ASTUGameModeBase::StartPlay()
