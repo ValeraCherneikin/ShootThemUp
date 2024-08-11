@@ -1,5 +1,6 @@
 // Shoot Them Up Game.All Rights Reserved.
 
+//Нужно больше узнать про GameInstance
 #pragma once
 
 #include "CoreMinimal.h"
@@ -10,4 +11,11 @@ UCLASS()
 class SHOOTTHEMUP_API USTUGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
+
+public:
+    FName GetStartupLevelName() const {return StartupLevelName;}
+
+protected:
+    UPROPERTY(EditDefaultsOnly,Category="Game")
+    FName StartupLevelName = NAME_None; // Нужно записать про NAME_None
 };
